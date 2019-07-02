@@ -17,8 +17,13 @@ cc_library_headers {
     export_include_dirs: ["include"],
 }
 
-cc_defaults {
-    name: "libgui_defaults",
+cc_library_shared {
+    name: "libgui",
+    vendor_available: false,
+    vndk: {
+        enabled: true,
+    },
+
     clang: true,
     cflags: [
         "-Wall",
@@ -52,7 +57,7 @@ cc_defaults {
         "-Wno-weak-vtables",
 
         // Allow four-character integer literals
-        "-Wno-four-char-constants",
+	"-Wno-four-char-constants",
 
         // Allow documentation warnings
         "-Wno-documentation",
@@ -164,7 +169,7 @@ cc_defaults {
         "libEGL",
         "libnativewindow",
         "libui",
-       "android.hidl.token@1.0-utils",
+        "android.hidl.token@1.0-utils",
         "android.hardware.graphics.bufferqueue@1.0",
         "android.hardware.graphics.common@1.1",
     ],
@@ -176,21 +181,6 @@ cc_defaults {
     export_include_dirs: [
         "include",
     ],
-}
-
-cc_library_shared {
-    name: "libgui",
-    vendor_available: false,
-    vndk: {
-        enabled: true,
-    },
-    defaults: ["libgui_defaults"]
-}
-
-cc_library_shared {
-    name: "libgui_vendor",
-    vendor: true,
-    defaults: ["libgui_defaults"]
 }
 
 subdirs = ["tests"]
